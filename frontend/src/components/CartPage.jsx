@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 function CartPage({ cartItems, removeFromCart }) {
+  const [address, setAddress] = useState({
+    fullName: "",
+    phone: "",
+    street: "",
+    city: "",
+    postalCode: "",
+  });
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+
   const totalAmount = cartItems.reduce(
     (acc, item) => acc + Number(item.numericPrice || 0),
     0
   );
+
+  const handleAddressChange = (e) => {
+    setAddress({ ...address, [e.target.name]: e.target.value });
+  };
 
   const handleCheckout = async () => {
     if (cartItems.length === 0) {
@@ -14,23 +27,53 @@ function CartPage({ cartItems, removeFromCart }) {
       return;
     }
 
+    if (!address.fullName || !address.phone || !address.street || !address.city) {
+      alert("Please fill in your full shipping address before checkout");
+      return;
+    }
+
+    setIsPlacingOrder(true);
+
     try {
       const orderData = {
         items: cartItems,
         totalAmount: totalAmount,
+        shippingAddress: address,
       };
 
       const response = await axios.post(
-        "https://onestopmart-production.up.railway.app",
+        "https://onestopmart-production.up.railway.app/api/orders",
         orderData
       );
 
       console.log(response.data);
       alert("Order Placed Successfully");
+
+      setAddress({
+        fullName: "",
+        phone: "",
+        street: "",
+        city: "",
+        postalCode: "",
+      });
     } catch (error) {
       console.log(error);
       alert("Failed to place order");
+    } finally {
+      setIsPlacingOrder(false);
     }
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "12px 14px",
+    border: "1px solid #2a2d35",
+    borderRadius: "4px",
+    outline: "none",
+    fontSize: "14px",
+    backgroundColor: "#1c1f26",
+    color: "#f4f1ea",
+    marginBottom: "12px",
   };
 
   return (
@@ -153,6 +196,80 @@ function CartPage({ cartItems, removeFromCart }) {
                   </button>
                 </div>
               ))}
+
+              {/* Shipping Address Form */}
+              <div
+                style={{
+                  background: "#15171c",
+                  padding: "24px",
+                  borderRadius: "6px",
+                  border: "1px solid #2a2d35",
+                  marginTop: "10px",
+                }}
+              >
+                <h3
+                  style={{
+                    color: "#f4f1ea",
+                    fontWeight: 500,
+                    marginBottom: "18px",
+                    borderBottom: "1px solid #2a2d35",
+                    paddingBottom: "14px",
+                  }}
+                >
+                  Shipping Address
+                </h3>
+
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Full Name"
+                  value={address.fullName}
+                  onChange={handleAddressChange}
+                  style={inputStyle}
+                  required
+                />
+
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={address.phone}
+                  onChange={handleAddressChange}
+                  style={inputStyle}
+                  required
+                />
+
+                <input
+                  type="text"
+                  name="street"
+                  placeholder="Street Address / House No."
+                  value={address.street}
+                  onChange={handleAddressChange}
+                  style={inputStyle}
+                  required
+                />
+
+                <div style={{ display: "flex", gap: "12px" }}>
+                  <input
+                    type="text"
+                    name="city"
+                    placeholder="City"
+                    value={address.city}
+                    onChange={handleAddressChange}
+                    style={{ ...inputStyle, marginBottom: 0 }}
+                    required
+                  />
+
+                  <input
+                    type="text"
+                    name="postalCode"
+                    placeholder="Postal Code (optional)"
+                    value={address.postalCode}
+                    onChange={handleAddressChange}
+                    style={{ ...inputStyle, marginBottom: 0 }}
+                  />
+                </div>
+              </div>
             </div>
 
             <div
@@ -230,10 +347,11 @@ function CartPage({ cartItems, removeFromCart }) {
 
               <button
                 className="submit-btn"
-                style={{ width: "100%", marginTop: "30px" }}
+                style={{ width: "100%", marginTop: "30px", opacity: isPlacingOrder ? 0.6 : 1 }}
                 onClick={handleCheckout}
+                disabled={isPlacingOrder}
               >
-                Proceed to Checkout
+                {isPlacingOrder ? "Placing Order..." : "Proceed to Checkout"}
               </button>
 
               <Link

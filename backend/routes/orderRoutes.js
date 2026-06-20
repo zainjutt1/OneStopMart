@@ -6,7 +6,7 @@ const router = express.Router();
 // Save order in MongoDB
 router.post("/", async (req, res) => {
   try {
-    const { items, totalAmount } = req.body;
+    const { items, totalAmount, shippingAddress } = req.body;
 
     if (!items || items.length === 0) {
       return res.status(400).json({
@@ -15,9 +15,23 @@ router.post("/", async (req, res) => {
       });
     }
 
+    if (
+      !shippingAddress ||
+      !shippingAddress.fullName ||
+      !shippingAddress.phone ||
+      !shippingAddress.street ||
+      !shippingAddress.city
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Complete shipping address is required",
+      });
+    }
+
     const newOrder = new Order({
       items,
       totalAmount,
+      shippingAddress,
     });
 
     await newOrder.save();
