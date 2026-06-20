@@ -34,7 +34,7 @@ function MoreProducts({ addToCart }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
-    <div className="product-section" style={{paddingTop: '100px', backgroundColor: '#f3f4f6', minHeight: '100vh'}}>
+    <div className="product-section" style={{paddingTop: '110px', backgroundColor: '#0c0d10', minHeight: '100vh'}}>
       <h2>All Products</h2>
       <div className="product-divider"></div>
       
@@ -48,10 +48,10 @@ function MoreProducts({ addToCart }) {
               <div className="size-details">
                 {product.details.map((d, i) => (
                   <div key={i} className="size-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <p style={{ margin: 0 }}><strong>{d.size}:</strong> {d.price}</p>
+                    <p style={{ margin: 0, color: '#f4f1ea' }}><strong style={{ color: '#9a958a', fontWeight: 400 }}>{d.size}:</strong> {d.price}</p>
                     <button 
                       className="add-to-cart-btn" 
-                      style={{ padding: '4px 12px', background: '#10b981', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                      style={{ padding: '5px 14px', background: 'transparent', color: '#e8c873', border: '1px solid #c9a648', borderRadius: '2px', cursor: 'pointer', fontSize: '11px', letterSpacing: '0.5px', textTransform: 'uppercase' }}
                       onClick={() => addToCart(product, d)}
                     >
                       Add

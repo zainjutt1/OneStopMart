@@ -39,7 +39,7 @@ function CartPage({ cartItems, removeFromCart }) {
       style={{
         paddingTop: "120px",
         minHeight: "90vh",
-        backgroundColor: "#f9fafb",
+        backgroundColor: "#0c0d10",
       }}
     >
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 20px" }}>
@@ -53,17 +53,19 @@ function CartPage({ cartItems, removeFromCart }) {
           <div
             style={{
               textAlign: "center",
-              padding: "50px",
-              background: "white",
-              borderRadius: "15px",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+              padding: "60px 30px",
+              background: "#15171c",
+              borderRadius: "6px",
+              border: "1px solid #2a2d35",
             }}
           >
-            <div style={{ fontSize: "50px", marginBottom: "20px" }}>🛒</div>
+            <div style={{ fontSize: "46px", marginBottom: "20px", opacity: 0.7 }}>🛒</div>
 
-            <h3>Your cart is empty!</h3>
+            <h3 style={{ color: "#f4f1ea", fontWeight: 500, marginBottom: "10px" }}>
+              Your cart is empty
+            </h3>
 
-            <p style={{ color: "#666", marginBottom: "20px" }}>
+            <p style={{ color: "#9a958a", marginBottom: "28px", fontWeight: 300 }}>
               Looks like you haven't added anything to your cart yet.
             </p>
 
@@ -86,6 +88,7 @@ function CartPage({ cartItems, removeFromCart }) {
               gap: "30px",
               alignItems: "start",
             }}
+            className="cart-grid"
           >
             <div className="cart-items-container">
               {cartItems.map((item) => (
@@ -97,8 +100,8 @@ function CartPage({ cartItems, removeFromCart }) {
                     flexDirection: "row",
                     alignItems: "center",
                     minHeight: "auto",
-                    padding: "15px",
-                    marginBottom: "15px",
+                    padding: "18px",
+                    marginBottom: "16px",
                     textAlign: "left",
                   }}
                 >
@@ -106,25 +109,26 @@ function CartPage({ cartItems, removeFromCart }) {
                     src={item.img}
                     alt={item.title}
                     style={{
-                      width: "80px",
-                      height: "80px",
+                      width: "75px",
+                      height: "75px",
                       objectFit: "contain",
                       marginRight: "20px",
+                      marginBottom: 0,
                     }}
                   />
 
                   <div style={{ flex: "1" }}>
-                    <h4 style={{ margin: "0 0 5px 0" }}>{item.title}</h4>
+                    <h4 style={{ margin: "0 0 6px 0", color: "#f4f1ea", fontWeight: 500 }}>{item.title}</h4>
 
-                    <p style={{ fontSize: "13px", color: "#666", margin: "0" }}>
+                    <p style={{ fontSize: "13px", color: "#9a958a", margin: "0" }}>
                       Size: {item.size}
                     </p>
 
                     <p
                       style={{
-                        fontWeight: "bold",
-                        color: "#2563eb",
-                        margin: "5px 0 0 0",
+                        fontWeight: "600",
+                        color: "#e8c873",
+                        margin: "8px 0 0 0",
                       }}
                     >
                       {item.price}
@@ -134,12 +138,14 @@ function CartPage({ cartItems, removeFromCart }) {
                   <button
                     onClick={() => removeFromCart(item.cartId)}
                     style={{
-                      backgroundColor: "#fee2e2",
-                      color: "#ef4444",
-                      padding: "8px 12px",
-                      fontSize: "12px",
-                      border: "none",
-                      borderRadius: "8px",
+                      backgroundColor: "transparent",
+                      color: "#e0654f",
+                      padding: "8px 14px",
+                      fontSize: "11px",
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      border: "1px solid #e0654f",
+                      borderRadius: "2px",
                       cursor: "pointer",
                     }}
                   >
@@ -151,18 +157,21 @@ function CartPage({ cartItems, removeFromCart }) {
 
             <div
               style={{
-                background: "white",
-                padding: "25px",
-                borderRadius: "15px",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+                background: "#15171c",
+                padding: "28px",
+                borderRadius: "6px",
+                border: "1px solid #2a2d35",
+                borderTop: "2px solid #c9a648",
                 position: "sticky",
                 top: "100px",
               }}
             >
               <h3
                 style={{
-                  borderBottom: "1px solid #eee",
-                  paddingBottom: "15px",
+                  borderBottom: "1px solid #2a2d35",
+                  paddingBottom: "16px",
+                  color: "#f4f1ea",
+                  fontWeight: 500,
                 }}
               >
                 Order Summary
@@ -173,10 +182,12 @@ function CartPage({ cartItems, removeFromCart }) {
                   display: "flex",
                   justifyContent: "space-between",
                   margin: "20px 0",
+                  color: "#9a958a",
+                  fontSize: "14px",
                 }}
               >
                 <span>Subtotal ({cartItems.length} items)</span>
-                <span>Rs. {totalAmount}</span>
+                <span style={{ color: "#f4f1ea" }}>Rs. {totalAmount}</span>
               </div>
 
               <div
@@ -184,8 +195,9 @@ function CartPage({ cartItems, removeFromCart }) {
                   display: "flex",
                   justifyContent: "space-between",
                   margin: "10px 0",
-                  color: "#10b981",
-                  fontWeight: "bold",
+                  color: "#4caf7d",
+                  fontWeight: "600",
+                  fontSize: "14px",
                 }}
               >
                 <span>Delivery</span>
@@ -194,22 +206,22 @@ function CartPage({ cartItems, removeFromCart }) {
 
               <div
                 style={{
-                  borderTop: "2px solid #eee",
+                  borderTop: "1px solid #2a2d35",
                   marginTop: "20px",
                   paddingTop: "20px",
                   display: "flex",
                   justifyContent: "space-between",
                 }}
               >
-                <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                <span style={{ fontWeight: "600", fontSize: "1.1rem", color: "#f4f1ea" }}>
                   Total
                 </span>
 
                 <span
                   style={{
-                    fontWeight: "bold",
+                    fontWeight: "700",
                     fontSize: "1.2rem",
-                    color: "#111827",
+                    color: "#e8c873",
                   }}
                 >
                   Rs. {totalAmount}
@@ -229,9 +241,9 @@ function CartPage({ cartItems, removeFromCart }) {
                 style={{
                   display: "block",
                   textAlign: "center",
-                  marginTop: "15px",
-                  color: "#666",
-                  fontSize: "14px",
+                  marginTop: "16px",
+                  color: "#9a958a",
+                  fontSize: "13px",
                   textDecoration: "none",
                 }}
               >

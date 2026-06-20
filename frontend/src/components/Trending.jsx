@@ -56,18 +56,20 @@ function Trending({ addToCart }) {
             {selectedProduct === product.id ? (
               <div className="size-details">
                 {product.details.map((d, index) => (
-                  <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', borderBottom: '1px solid #eee', paddingBottom: '5px' }}>
-                    <p style={{ margin: 0 }}><strong>{d.size}:</strong> {d.price}</p>
+                  <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', borderBottom: '1px solid #2a2d35', paddingBottom: '5px' }}>
+                    <p style={{ margin: 0, color: '#f4f1ea' }}><strong style={{ color: '#9a958a', fontWeight: 400 }}>{d.size}:</strong> {d.price}</p>
                     <button 
                       onClick={() => addToCart(product, d)}
                       style={{ 
-                        padding: '4px 10px', 
-                        backgroundColor: '#10b981', 
-                        color: 'white', 
-                        border: 'none', 
-                        borderRadius: '4px', 
+                        padding: '5px 14px', 
+                        backgroundColor: 'transparent', 
+                        color: '#e8c873', 
+                        border: '1px solid #c9a648', 
+                        borderRadius: '2px', 
                         cursor: 'pointer',
-                        fontSize: '12px'
+                        fontSize: '11px',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase'
                       }}
                     >
                       Add
