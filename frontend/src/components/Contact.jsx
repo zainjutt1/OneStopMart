@@ -16,7 +16,7 @@ function Contact() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("onestopmart-production.up.railway.app", {
+      const response = await axios.post("https://onestopmart-production.up.railway.app, {
         name: formData.name,
         email: formData.email,
         subject: formData.subject,

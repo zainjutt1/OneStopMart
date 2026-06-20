@@ -21,7 +21,7 @@ function CartPage({ cartItems, removeFromCart }) {
       };
 
       const response = await axios.post(
-        "onestopmart-production.up.railway.app",
+        "https://onestopmart-production.up.railway.app",
         orderData
       );
 
