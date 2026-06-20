@@ -21,7 +21,7 @@ function CartPage({ cartItems, removeFromCart }) {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/orders",
+        "onestopmart-production.up.railway.app",
         orderData
       );
 
