@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import pepsiImg from '../assets/pepsi.jpg';
 import tapalImg from '../assets/tapal.jpg';
 import surfImg from '../assets/excel.jpg';
@@ -13,6 +12,7 @@ import sensodyneImg from '../assets/Sensodyne.png';
 import arielImg from '../assets/Ariel.jpg';
 import miloImg from '../assets/Milo.jpg';
 import shieldImg from '../assets/Toothbrush.jpg';
+import usePageTransition from '../hooks/usePageTransition';
 
 const extraProducts = [
   { id: 101, title: "Pepsi Cold Drink", img: pepsiImg, details: [{size: "500ml", price: "Rs. 100"}, {size: "1.5L", price: "Rs. 190"}, {size: "2.25L", price: "Rs. 250"}] },
@@ -29,28 +29,46 @@ const extraProducts = [
   { id: 112, title: "Shield Toothbrush", img: shieldImg, details: [{size: "Soft", price: "Rs. 110"}, {size: "Medium", price: "Rs. 120"}, {size: "Hard", price: "Rs. 120"}] },
 ];
 
-
 function MoreProducts({ addToCart }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const visible = usePageTransition();
 
   return (
-    <div className="product-section" style={{paddingTop: '110px', backgroundColor: '#0c0d10', minHeight: '100vh'}}>
+    <div
+      className="product-section"
+      style={{
+        paddingTop: '110px',
+        backgroundColor: '#0c0d10',
+        minHeight: '100vh',
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(28px)',
+        transition: 'opacity 0.7s ease, transform 0.7s ease',
+      }}
+    >
       <h2>All Products</h2>
       <div className="product-divider"></div>
-      
+
       <div className="product-grid">
-        {extraProducts.map((product) => (
-          <div key={product.id} className="card">
+        {extraProducts.map((product, index) => (
+          <div
+            key={product.id}
+            className="card"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateY(0)' : 'translateY(20px)',
+              transition: `opacity 0.5s ease ${0.1 + index * 0.06}s, transform 0.5s ease ${0.1 + index * 0.06}s`,
+            }}
+          >
             <img src={product.img} alt={product.title} style={{ width: '100%', height: '180px', objectFit: 'contain' }} />
             <h3>{product.title}</h3>
-            
+
             {selectedProduct === product.id ? (
               <div className="size-details">
                 {product.details.map((d, i) => (
                   <div key={i} className="size-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <p style={{ margin: 0, color: '#f4f1ea' }}><strong style={{ color: '#9a958a', fontWeight: 400 }}>{d.size}:</strong> {d.price}</p>
-                    <button 
-                      className="add-to-cart-btn" 
+                    <button
+                      className="add-to-cart-btn"
                       style={{ padding: '5px 14px', background: 'transparent', color: '#e8c873', border: '1px solid #c9a648', borderRadius: '2px', cursor: 'pointer', fontSize: '11px', letterSpacing: '0.5px', textTransform: 'uppercase' }}
                       onClick={() => addToCart(product, d)}
                     >
@@ -66,9 +84,9 @@ function MoreProducts({ addToCart }) {
           </div>
         ))}
       </div>
-      
-      <div style={{textAlign: 'center', padding: '40px'}}>
-         <Link to="/" className="back-link">← Back to Home</Link>
+
+      <div style={{ textAlign: 'center', padding: '40px' }}>
+        <Link to="/" className="back-link">← Back to Home</Link>
       </div>
     </div>
   );

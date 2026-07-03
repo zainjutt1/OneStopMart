@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
 import myLogo from "../assets/logo.png";
+import usePageTransition from '../hooks/usePageTransition';
 
 function Contact() {
+  const visible = usePageTransition();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,7 +15,6 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post("https://onestopmart-production.up.railway.app/api/contact", {
         name: formData.name,
@@ -22,16 +22,9 @@ function Contact() {
         subject: formData.subject,
         message: formData.message,
       });
-
       console.log(response.data);
       alert("Message Sent Successfully");
-
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
+      setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       console.log(error);
       alert("Failed to send message");
@@ -39,10 +32,16 @@ function Contact() {
   };
 
   return (
-    <div className="contact-container">
+    <div
+      className="contact-container"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(28px)',
+        transition: 'opacity 0.7s ease, transform 0.7s ease',
+      }}
+    >
       <div className="contact-card">
         <img src={myLogo} alt="Logo" className="contact-logo" />
-
         <h2>Contact Us</h2>
 
         <form className="contact-form" onSubmit={handleSubmit}>
@@ -51,49 +50,33 @@ function Contact() {
             placeholder="Full Name"
             required
             value={formData.name}
-            onChange={(e) =>
-              setFormData({ ...formData, name: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
-
           <input
             type="email"
             placeholder="Email Address"
             required
             value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           />
-
           <input
             type="text"
             placeholder="Subject"
             required
             value={formData.subject}
-            onChange={(e) =>
-              setFormData({ ...formData, subject: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
           />
-
           <textarea
             rows="4"
             placeholder="Your Message"
             required
             value={formData.message}
-            onChange={(e) =>
-              setFormData({ ...formData, message: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           ></textarea>
-
-          <button type="submit" className="submit-btn">
-            Send Message
-          </button>
+          <button type="submit" className="submit-btn">Send Message</button>
         </form>
 
-        <Link to="/" className="back-link">
-          ← Back to Home
-        </Link>
+        <Link to="/" className="back-link">← Back to Home</Link>
       </div>
     </div>
   );

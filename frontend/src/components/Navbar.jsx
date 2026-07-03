@@ -22,9 +22,8 @@ function Navbar({ cartCount }) {
       </button>
 
       <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-        <li><a href="/#home" onClick={closeMenu}>Home</a></li>
-        <li><a href="/#about" onClick={closeMenu}>About</a></li>
-        <li><a href="/#trending" onClick={closeMenu}>Trending</a></li>
+        <li><Link to="/" onClick={closeMenu}>Home</Link></li>
+        <li><Link to="/about" onClick={closeMenu}>About</Link></li>
         <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
         <li className="cart-link-wrapper">
           <Link to="/cartpage" className="cart-icon" onClick={closeMenu}>
