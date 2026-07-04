@@ -671,3 +671,12 @@ footer {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* ── About Us two-column responsive ── */
+@media (max-width: 768px) {
+  .about-two-col {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    padding: 60px 20px !important;
+  }
+}
